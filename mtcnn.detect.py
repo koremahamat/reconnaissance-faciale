@@ -18,14 +18,14 @@ def create_dataset(name):
     return person_dir  # Retourner le chemin du dossier créé
 
 # Remplacer 'name' par le nom de la personne
-name = "nom_de_la_personne"  # À définir avant de créer le dataset
+name = "noms"  # À définir avant de créer le dataset
 person_dir = create_dataset(name)
 
 cap = cv2.VideoCapture(0)
 count = 0
 
 with Progress() as progress:
-    task = progress.add_task("Capturing images...", total=5)
+    task = progress.add_task("Capturing images...", total=50)
 
     while not progress.finished:
         ret, frame = cap.read()
@@ -42,7 +42,7 @@ with Progress() as progress:
         # Si des visages sont détectés
         if boxes is not None:
             for i, box in enumerate(boxes):
-                if count < 5:
+                if count < 50:
                     # Obtenez les coordonnées du cadre
                     x1, y1, x2, y2 = box.astype(int)
 
@@ -60,7 +60,7 @@ with Progress() as progress:
         # Afficher la vidéo avec les cadres
         cv2.imshow("Video", frame)
 
-        if cv2.waitKey(1) & 0xFF == ord('q') or count >= 5:
+        if cv2.waitKey(1) & 0xFF == ord('q') or count >= 50:
             break
 
 cap.release()
