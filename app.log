@@ -1,0 +1,34 @@
+2025-05-15 19:17:15,491 - INFO - Début de l'extraction des embeddings depuis le dataset...
+2025-05-15 19:17:18,869 - INFO - Tous les fichiers nécessaires sont disponibles.
+2025-05-15 19:17:18,869 - INFO - Chargement des embeddings extraits...
+2025-05-15 19:17:18,870 - INFO - Embeddings LFW chargés : 18
+2025-05-15 19:17:18,870 - INFO - Démarrage de la reconnaissance faciale via webcam...
+2025-05-15 19:17:20,273 - INFO - Dimension de l'embedding : (1, 512)
+2025-05-15 19:17:20,274 - INFO - Visage reconnu : Paul_Biya
+2025-05-15 19:17:20,867 - INFO - Programme terminé.
+2025-05-15 19:19:40,813 - INFO - Veuillez entrer le mot de passe pour accéder à l'application.
+2025-05-15 19:20:06,343 - WARNING - Mot de passe incorrect. Veuillez réessayer.
+2025-05-15 19:20:10,757 - WARNING - Mot de passe incorrect. Veuillez réessayer.
+2025-05-15 19:20:17,832 - WARNING - Mot de passe incorrect. Veuillez réessayer.
+2025-05-15 19:20:17,832 - ERROR - Trop de tentatives échouées. Accès refusé.
+2025-05-15 19:20:17,834 - INFO - Programme terminé.
+2025-05-15 19:46:55,430 - INFO - Veuillez entrer le mot de passe pour accéder à l'application.
+2025-05-15 19:47:11,350 - INFO - Authentification réussie.
+2025-05-15 19:47:11,350 - INFO - Début de l'extraction des embeddings depuis le dataset...
+2025-05-15 19:47:14,048 - INFO - Tous les fichiers nécessaires sont disponibles.
+2025-05-15 19:47:14,048 - INFO - Chargement des embeddings extraits...
+2025-05-15 19:47:14,049 - INFO - Embeddings LFW chargés : 18
+2025-05-15 19:47:14,049 - INFO - Démarrage de la reconnaissance faciale via webcam...
+2025-05-15 19:47:15,368 - ERROR - Le tenseur de visage est vide ou invalide.
+2025-05-15 19:47:15,396 - ERROR - Le tenseur de visage est vide ou invalide.
+2025-05-15 19:47:15,411 - INFO - Programme terminé.
+2025-05-15 19:47:31,697 - INFO - Veuillez entrer le mot de passe pour accéder à l'application.
+2025-05-15 19:47:41,468 - INFO - Authentification réussie.
+2025-05-15 19:47:41,468 - INFO - Début de l'extraction des embeddings depuis le dataset...
+2025-05-15 19:47:44,341 - INFO - Tous les fichiers nécessaires sont disponibles.
+2025-05-15 19:47:44,341 - INFO - Chargement des embeddings extraits...
+2025-05-15 19:47:44,342 - INFO - Embeddings LFW chargés : 18
+2025-05-15 19:47:44,342 - INFO - Démarrage de la reconnaissance faciale via webcam...
+2025-05-15 19:47:45,729 - INFO - Dimension de l'embedding : (1, 512)
+2025-05-15 19:47:45,730 - INFO - Visage reconnu : Paul_Biya
+2025-05-15 19:47:46,303 - INFO - Programme terminé.

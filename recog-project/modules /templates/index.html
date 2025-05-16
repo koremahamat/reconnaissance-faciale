@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconnaissance Faciale - Sécurité Nationale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        body {
+            background-image: url('/static/index.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: hsl(240, 17%, 94%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: hsl(244, 100%, 50%);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            color: #f0f0f0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1rem;
+            color: #fff;
+            background: hsl(244, 100%, 50%);
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: hsl(244, 100%, 50%);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reconnaissance Faciale - Sécurité Nationale</h1>
+        <p>Assurez la sécurité avec notre technologie avancée de reconnaissance faciale.</p>
+        
+        <form action="/process" method="post" enctype="multipart/form-data">
+            <div class="upload">
+                <label for="imageUpload">Télécharger une image</label>
+                <input type="file" id="imageUpload" name="image" accept="image/*">
+            </div>
+            <button class="btn" type="submit" aria-label="Démarrer la reconnaissance">Démarrer la reconnaissance</button>
+        </form>
+
+        <p>Ou utilisez la caméra de surveillance :</p>
+        <button class="btn" onclick="startWebcam()">Activer la caméra</button>
+    </div>
+
+    <script>
+        function startWebcam() {
+            // Implémentez la logique pour activer la caméra de surveillance ici
+            alert("Caméra de surveillance activée !");
+        }
+    </script>
+</body>
+</html>

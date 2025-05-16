@@ -1,0 +1,115 @@
+import requests
+from facenet_pytorch import MTCNN, InceptionResnetV1
+import torch
+from PIL import Image, ImageDraw, ImageFont
+import logging
+from bs4 import BeautifulSoup
+
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+mtcnn = MTCNN(keep_all=True, device=device)
+model = InceptionResnetV1(pretrained='vggface2', classify=False).eval().to(device)
+
+def reconnaitre_visage(image_path, embeddings_lfw, labels_lfw):
+    """Reconnaître un visage dans une image donnée."""
+    img = Image.open(image_path).convert('RGB')
+    faces = mtcnn(img)
+
+    if faces is not None:
+        for face in faces:
+            embedding = model(face.unsqueeze(0)).detach().cpu().numpy()
+            distances = comparer_embeddings(embedding, embeddings_lfw)
+            distances.sort(key=lambda x: x[[1]](https://support.tiktok.com/en/getting-started/setting-up-your-profile/linking-another-social-media-account))  # Trier par distance
+
+            best_match = None
+            for index, distance in distances:
+                if distance < 0.6:  # Seuil de reconnaissance
+                    best_match = index
+                    break
+
+            if best_match is not None:
+                nom_reconnu = labels_lfw[best_match]
+                logging.info(f"Visage reconnu : {nom_reconnu}")
+                draw = ImageDraw.Draw(img)
+                font = ImageFont.load_default()
+                draw.text((10, 10), f"Reconnu : {nom_reconnu}", fill="white", font=font)
+            else:
+                logging.info("Visage non reconnu.")
+                reponse = input("Reconnaissez-vous la personne ? (oui/non) : ")
+                if reponse.lower() == 'oui':
+                    nom_utilisateur = input("Veuillez entrer le nom de la personne : ")
+                    logging.info(f"Nom enregistré : {nom_utilisateur}")
+                else:
+                    nom_inconnu = input("Entrez un terme de recherche pour obtenir des informations : ")
+                    information = scraping_information(nom_inconnu)
+                    logging.info(f"Information trouvée : {information}")
+
+    else:
+        logging.info("Aucun visage détecté dans l'image.")
+
+def scraping_information(nom):
+    """Scraping des informations à partir de diverses sources."""
+    info = scraping_wikipedia(nom)
+    if info == "Aucune information trouvée.":
+        info = scraping_autres_sources(nom)
+    return info
+
+def scraping_wikipedia(nom):
+    """Scraping des informations à partir de Wikipedia."""
+    search_url = f"https://fr.wikipedia.org/wiki/{nom.replace(' ', '_')}"
+    response = requests.get(search_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        summary = soup.find('p').text
+        return summary
+    else:
+        return "Aucune information trouvée."
+
+def scraping_autres_sources(nom):
+    """Scraping d'autres sources comme des articles de presse et des réseaux sociaux."""
+    info = scraping_google_news(nom)
+    if info == "Aucune information trouvée.":
+        info = scraping_reseaux_sociaux(nom)
+    return info
+
+def scraping_google_news(nom):
+    """Recherche d'articles d'actualité sur Google News."""
+    search_url = f"https://news.google.com/search?q={nom.replace(' ', '%20')}"
+    response = requests.get(search_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        articles = soup.find_all('h3')
+        if articles:
+            return f"Articles trouvés : {', '.join(article.text for article in articles[:3])}"  # Limiter à 3 articles
+    return "Aucune information trouvée dans d'autres sources."
+
+def scraping_reseaux_sociaux(nom):
+    """Recherche sur les réseaux sociaux comme Twitter, Instagram, TikTok et Snapchat."""
+    # Exemple de recherche sur Twitter
+    twitter_url = f"https://twitter.com/search?q={nom.replace(' ', '%20')}&src=typed_query"
+    response = requests.get(twitter_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        tweets = soup.find_all('div', class_='tweet')
+        if tweets:
+            return f"Tweets trouvés : {', '.join(tweet.text for tweet in tweets[:3])}"  # Limiter à 3 tweets
+
+    # Recherche sur Instagram (note : Instagram nécessite souvent une authentification)
+    instagram_url = f"https://www.instagram.com/explore/tags/{nom.replace(' ', '')}/"
+    response = requests.get(instagram_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        posts = soup.find_all('div', class_='v1Nh3 kIKUG  _bz0w')
+        if posts:
+            return f"Publications Instagram trouvées : {', '.join(post.text for post in posts[:3])}"  # Limiter à 3 publications
+
+    # Recherche sur TikTok (note : TikTok nécessite souvent une authentification)
+    tiktok_url = f"https://www.tiktok.com/search?q={nom.replace(' ', '%20')}"
+    response = requests.get(tiktok_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        tiktoks = soup.find_all('div', class_='tiktok-1s72j5g-DivItemContainer')
+        if tiktoks:
+            return f"TikToks trouvés : {', '.join(tiktok.text for tiktok in tiktoks[:3])}"  # Limiter à 3 TikToks
+
+    # Recherche sur Snapchat (note : Snapchat ne permet pas le scraping direct)
+    return "Aucune information trouvée sur les réseaux sociaux."
